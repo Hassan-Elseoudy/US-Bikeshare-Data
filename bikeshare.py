@@ -142,12 +142,14 @@ def user_stats(df):
     print('counts of user types: {} \n'.format(df['User Type'].value_counts().to_string()))
     
     # TO DO: Display counts of gender
-    print('counts of gender: {} \n'.format(df['Gender'].value_counts().to_string()))
+    if 'Gender' in df.columns:
+        print('counts of gender: {} \n'.format(df['Gender'].value_counts().to_string()))
 
     # TO DO: Display earliest, most recent, and most common year of birth
-    print('earliest year of birth: {}'.format(df['Birth Year'].min()))
-    print('most recent year of birth: {}'.format(df['Birth Year'].max()))
-    print('most common year of birth: {}'.format(df['Birth Year'].mode()[0]))
+    if 'Birth Year' in df.columns:
+        print('earliest year of birth: {}'.format(df['Birth Year'].min()))
+        print('most recent year of birth: {}'.format(df['Birth Year'].max()))
+        print('most common year of birth: {}'.format(df['Birth Year'].mode()[0]))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -162,6 +164,18 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
+        
+        user_input = input('Do you want to see more data? if not please type stop.\n')
+        line = 0
+
+        while True :
+            if user_input.lower() != 'stop':
+                print(df.iloc[line : line + 5])
+                line += 5
+                user_input = input('\nDo you want to see more data? if not please type stop.\n')
+            else:
+                break    
+
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
